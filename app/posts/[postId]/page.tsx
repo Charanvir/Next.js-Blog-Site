@@ -3,6 +3,15 @@ import { getPostdata, getSortedPostsData } from "@/lib/posts";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+export function generateStaticParams() {
+  const posts = getSortedPostsData();
+  return posts.map((post) => {
+    ({
+      postId: post.id,
+    });
+  });
+}
+
 export function generateMetadata({ params }: { params: { postId: string } }) {
   const posts = getSortedPostsData(); //deduped same request will not be sent more than once if it has already been requested
   const { postId } = params;
